@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Editar Beacon</title>
+
+<!-- CorBase = #4B0082 -->
+
+<meta name="_csrf" content="${_csrf.token}" />
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}" />
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="icon" type="image/png" sizes="20x20"
+	th:href="@{/images/logoQBeacon.png}" />
+<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/footer.css}" rel="stylesheet" />
+<link href="navbar-fixed-top.css" rel="stylesheet" />
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+</head>
+<body>
+	
+	<div class="container">
+		<!-- HEADER -->
+		<div th:replace="fragments/header :: header"></div>
+		
+		<!-- WHITE BOX -->
+		<div class="white-box" style="margin-top: 100px;">
+			<div class="container">
+				<div class="row col-sm-4"></div>
+				<div class="card card-container  row col-sm-4">
+					<h1 th:text="${beacon.nome}"></h1><br/>
+					<div class="form-group" align="center">
+					<img id="beacon_img" class="img-circle"
+						src="/images/logoBeacon.png" height="150" width="150"/><br/><br/>
+					<p id="beacon_name"></p>
+					<form id="cadastro_beacon" method="POST" th:object="${beacon}" th:action="@{/beacon/editar}">
+						<input type="hidden"
+          					th:name="${_csrf.parameterName}"
+          					th:value="${_csrf.token}" />
+          				<input	type="hidden"
+          					th:field="*{id}"
+          					th:value="${beacon.id}" />
+          					
+          				<div class="form-group">
+          					<label for="inputNome">Nome do Beacon</label> <br/><br/>
+          					<div class="input-group">
+          						<span class="input-group-addon">
+          							<i class="fa fa-bluetooth"></i>
+          						</span>
+          						<input type="text" id="inputNome" class="form-control"
+								placeholder="Nome" th:field="*{nome}" required="true"
+								autofocus="true" />
+          					</div>
+          				</div> <br/>
+						
+						<div class="form-group">
+          					<label>Sala</label> <br/><br/>
+          					<div class="input-group">
+          						<span class="input-group-addon">
+          							<i class="glyphicon glyphicon-blackboard"></i>
+          						</span>
+          						<select class="form-control" th:field="*{sala}" autofocus="true">
+          							<option th:if="${beacon.sala != null}" th:value="${beacon.sala.id}" 
+          								th:text="${beacon.sala.nome}" selected="selected" ></option>
+          							<option th:if="${beacon.sala == null}" th:value="${null}" 
+          								th:text="Nenhum" selected="selected" ></option>
+  									<option th:each="sala : ${salas}" th:if="${beacon.sala != sala}" th:value="${sala.id}" 
+  										th:text="${sala.nome}"></option>
+  									<option th:if="${beacon.sala != null}" th:value="${null}" 
+          								th:text="Nenhum" ></option>
+								</select>
+          					</div>
+          				</div> <br/>
+          				<div class="form-group row">
+							<div class="col-sm-3"></div>
+							<button class="btn btn-success col-sm-6" type="submit">Editar</button>
+						</div> <br/>
+					</form>
+				</div>
+				</div>
+				<div class="row col-sm-4"></div>
+			</div>
+		</div><!-- End to White Box -->
+		
+		<!-- FOOTER -->
+		<div th:include="fragments/footer :: footer"></div>
+		
+	</div>
+		
+	<script th:src="@{/bootstrap/js/jquery.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

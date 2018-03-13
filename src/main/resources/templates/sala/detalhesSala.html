@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title th:text="${sala.nome}"></title>
+
+<!-- CorBase = #4B0082 -->
+
+<meta name="_csrf" content="${_csrf.token}" />
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}" />
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="icon" type="image/png" sizes="20x20"
+	th:href="@{/images/logoQBeacon.png}" />
+<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/footer.css}" rel="stylesheet" />
+<link href="navbar-fixed-top.css" rel="stylesheet" />
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+</head>
+<body>
+	
+	<div class="container">
+		<!-- HEADER -->
+		<div th:replace="fragments/header :: header"></div>
+			
+		<!-- WHITE BOX -->
+		<div class="white-box" style="margin-top: 100px;">
+			<div class="container">
+				<div class="row" align="center"><h2>Detalhes da Sala</h2></div><br/>
+				<div class="row">
+					<div class="col-sm-8"></div>
+					<div class="col-sm-4">
+						<a class="btn btn-warning btn-sm" th:href="@{${'/sala/editar/'+sala.id}}" title="Editar">
+							Editar
+						</a>
+						<a class="btn btn-danger btn-sm" th:href="@{${'/sala/deletar/'+sala.id}}" title="Deletar">
+							Deletar
+						</a>
+					</div>
+				</div>
+				<div class="row" align="center">
+					<img id="sala_img" class="img-circle"
+						src="/images/logoSala.png" height="150" width="150"/>
+				</div> <br/>
+				<div class="row" align="center">
+					<h2 th:text="'- ' + ${sala.bloco.campus.instituicao.nome} + ' / ' + ${sala.bloco.campus.nome} + ' -'"></h2>
+					<h3 th:text="${sala.bloco.nome}"></h3>
+					<h1 th:text="${sala.nome}"></h1><br/> <br/>
+				</div>
+				<br/><br/><br/>
+				
+				<div class="row">
+					<div class="col-sm-3"></div>
+					<div th:if="${sala.beacon != null}" class="alert alert-success col-sm-6" role="alert">
+						<span>Beacon cadastrado : </span> 
+						<strong><a th:href="@{${'/beacon/'+sala.beacon.id}}" th:text="${sala.beacon.nome}"></a></strong>
+						<a class="btn btn-danger btn-sm" title="Remover"
+							th:href="@{${'/sala/' + sala.id + '/remover_beacon/' + sala.beacon.id}}" >
+					    	<i class="fa fa-close"></i>
+					    </a>
+					</div>
+					<div th:unless="${sala.beacon != null}" class="alert alert-danger col-sm-6" role="alert">
+						<span th:unless="${sala.beacon != null}"> Não possui Beacon cadastrado!
+							 Clique em <strong>editar</strong> para adicionar um novo Beacon.</span>
+					</div>
+					<div class="col-sm-3"></div>
+				</div><br/><br/>
+				
+				<div class="row">
+					<div class="col-sm-3"></div>
+					<div class="card card-container row col-sm-6">
+						<table class="table table-striped">
+						  <thead class="thead-dark">
+						    <tr>
+						    	<th scope="col"><h4>Lista de Reservas</h4></th>
+						    	<th></th>
+						    	<th>
+						    		<!-- <a th:href="@{${'/sala/'+sala.id+'/criar_reserva'}}"
+						    			class="btn btn-success btn-sm">
+						    			Criar nova Reserva
+						    		</a> -->
+						    	</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr th:each="reserva : ${sala.reservas}">
+						      <td><a th:text=" ${reserva.horario.diaSemana} + ' / ' + ${reserva.horario.periodo} + ' - ' + ${reserva.turma.professor} + ' - ' + ${reserva.turma.disciplina.nome}" 
+						      	th:href="@{${'/reserva/'+reserva.id}}" title="Detalhes"></a></td>
+						      <td></td>
+						      <td></td>
+						    </tr>
+						  </tbody>
+						</table>
+					</div>
+					<div class="col-sm-3"></div>
+				</div>
+			</div>
+		</div><!-- End to White Box -->
+		
+		<!-- FOOTER -->
+		<div th:include="fragments/footer :: footer"></div>
+		
+	</div>
+		
+	<script th:src="@{/bootstrap/js/jquery.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>
