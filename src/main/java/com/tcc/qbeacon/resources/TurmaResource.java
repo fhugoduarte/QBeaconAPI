@@ -92,16 +92,16 @@ public class TurmaResource {
 		
 		if(turmaBanco.getReserva2() != null) {
 			Reserva reserva = turmaBanco.getReserva2();
-			reserva1.setId(reserva.getId());
-			reserva1.setSala(
+			reserva2.setId(reserva.getId());
+			reserva2.setSala(
 					  reserva.getSala().getNome() + "-" 
 					+ reserva.getSala().getBloco().getNome() + "-" 
 					+ reserva.getSala().getBloco().getCampus().getNome() + "-"
 					+ reserva.getSala().getBloco().getCampus().getInstituicao().getNome());
-			reserva1.setHorario(
+			reserva2.setHorario(
 					  reserva.getHorario().getDiaSemana() + "/"
 					+ reserva.getHorario().getPeriodo());
-			reserva1.setTurma(
+			reserva2.setTurma(
 					  reserva.getTurma().getDisciplina().getNome() + "-"
 					+ reserva.getTurma().getProfessor());
 		}
@@ -112,7 +112,9 @@ public class TurmaResource {
 				turmaBanco.getDisciplina().getNome(),
 				reserva1,
 				reserva2);
+		; 
 		
 		return new ResponseEntity<TurmaData>(turma, HttpStatus.OK);
 	}
+	
 }
