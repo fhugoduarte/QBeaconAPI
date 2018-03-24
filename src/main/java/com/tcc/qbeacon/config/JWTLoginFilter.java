@@ -17,6 +17,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tcc.qbeacon.model.Usuario;
+import com.tcc.qbeacon.util.Constants;
+import com.tcc.qbeacon.util.MensagemRetorno;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter{
 
@@ -50,6 +52,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter{
 			Authentication auth) throws IOException, ServletException {
 		
 		TokenAuthenticationService.addAuthentication(response, auth.getName());
+		
 	}
 
 }
