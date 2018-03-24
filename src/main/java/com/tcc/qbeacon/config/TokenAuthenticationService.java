@@ -7,12 +7,14 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.tomcat.util.bcel.Const;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 
 import com.tcc.qbeacon.datas.AuthToken;
 import com.tcc.qbeacon.exceptions.TokenException;
 import com.tcc.qbeacon.util.Constants;
+import com.tcc.qbeacon.util.MensagemRetorno;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
