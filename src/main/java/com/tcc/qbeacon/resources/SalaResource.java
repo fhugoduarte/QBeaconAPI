@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tcc.qbeacon.datas.ReservaData;
 import com.tcc.qbeacon.datas.SalaData;
+import com.tcc.qbeacon.model.Reserva;
 import com.tcc.qbeacon.model.Sala;
 import com.tcc.qbeacon.service.SalaService;
 
@@ -33,13 +35,13 @@ public class SalaResource {
 					sala.getBloco().getNome(), 
 					sala.getBloco().getCampus().getNome(),
 					sala.getBloco().getCampus().getInstituicao().getNome(),
-					sala.getBeacon().getId()));
+					sala.getBeacon().getId(), new ArrayList<ReservaData>()));
 			}else {
 				salas.add(new SalaData(sala.getId(), sala.getNome(), 
 						sala.getBloco().getNome(), 
 						sala.getBloco().getCampus().getNome(),
 						sala.getBloco().getCampus().getInstituicao().getNome(),
-						null));
+						null, new ArrayList<ReservaData>()));
 			}
 
 		}
@@ -52,22 +54,74 @@ public class SalaResource {
 		Sala salaBanco = salaService.buscarSala(id);		
 		
 		if(salaBanco.getBeacon() != null) {
-			SalaData sala = new SalaData(salaBanco.getId(), salaBanco.getNome(), 
-				salaBanco.getBloco().getNome(), 
-				salaBanco.getBloco().getCampus().getNome(),
-				salaBanco.getBloco().getCampus().getInstituicao().getNome(),
-				salaBanco.getBeacon().getId());
-			
-			return new ResponseEntity<SalaData>(sala, HttpStatus.OK);
-			
-		}else {
-			SalaData sala = new SalaData(salaBanco.getId(), salaBanco.getNome(), 
+			if(salaBanco.getReservas().isEmpty()) {
+				SalaData sala = new SalaData(salaBanco.getId(), salaBanco.getNome(), 
 					salaBanco.getBloco().getNome(), 
 					salaBanco.getBloco().getCampus().getNome(),
 					salaBanco.getBloco().getCampus().getInstituicao().getNome(),
-					null);
-			return new ResponseEntity<SalaData>(sala, HttpStatus.OK);
+					salaBanco.getBeacon().getId(), new ArrayList<ReservaData>());
+				
+				return new ResponseEntity<SalaData>(sala, HttpStatus.OK);
+			}else {
+				List<ReservaData> reservas = new ArrayList<ReservaData>();
+				for (Reserva reserva : salaBanco.getReservas()) {
+					reservas.add(new ReservaData(
+							reserva.getId(),
+							reserva.getHorario().getDiaSemana() + "/"
+									+ reserva.getHorario().getPeriodo(),
+							reserva.getSala().getNome() + "-" 
+									+ reserva.getSala().getBloco().getNome() + "-" 
+									+ reserva.getSala().getBloco().getCampus().getNome() + "-"
+									+ reserva.getSala().getBloco().getCampus().getInstituicao().getNome(),
+							reserva.getTurma().getDisciplina().getNome() + "-"
+									+ reserva.getTurma().getProfessor()
+							));
+				}
+				
+				SalaData sala = new SalaData(salaBanco.getId(), salaBanco.getNome(), 
+						salaBanco.getBloco().getNome(), 
+						salaBanco.getBloco().getCampus().getNome(),
+						salaBanco.getBloco().getCampus().getInstituicao().getNome(),
+						salaBanco.getBeacon().getId(), reservas);
+				
+				return new ResponseEntity<SalaData>(sala, HttpStatus.OK);
+			}
+			
+		}else {
+			if(salaBanco.getReservas().isEmpty()) {
+				SalaData sala = new SalaData(salaBanco.getId(), salaBanco.getNome(), 
+					salaBanco.getBloco().getNome(), 
+					salaBanco.getBloco().getCampus().getNome(),
+					salaBanco.getBloco().getCampus().getInstituicao().getNome(),
+					salaBanco.getBeacon().getId(), new ArrayList<ReservaData>());
+				
+				return new ResponseEntity<SalaData>(sala, HttpStatus.OK);
+			}else {
+				List<ReservaData> reservas = new ArrayList<ReservaData>();
+				for (Reserva reserva : salaBanco.getReservas()) {
+					reservas.add(new ReservaData(
+							reserva.getId(),
+							reserva.getHorario().getDiaSemana() + "/"
+									+ reserva.getHorario().getPeriodo(),
+							reserva.getSala().getNome() + "-" 
+									+ reserva.getSala().getBloco().getNome() + "-" 
+									+ reserva.getSala().getBloco().getCampus().getNome() + "-"
+									+ reserva.getSala().getBloco().getCampus().getInstituicao().getNome(),
+							reserva.getTurma().getDisciplina().getNome() + "-"
+									+ reserva.getTurma().getProfessor()
+							));
+				}
+				
+				SalaData sala = new SalaData(salaBanco.getId(), salaBanco.getNome(), 
+						salaBanco.getBloco().getNome(), 
+						salaBanco.getBloco().getCampus().getNome(),
+						salaBanco.getBloco().getCampus().getInstituicao().getNome(),
+						null, reservas);
+				
+				return new ResponseEntity<SalaData>(sala, HttpStatus.OK);
+			}
 		}
+	
 	
 	}
 

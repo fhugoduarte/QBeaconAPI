@@ -1,5 +1,7 @@
 package com.tcc.qbeacon.datas;
 
+import java.util.List;
+
 public class SalaData {
 
 	private Integer id;
@@ -8,13 +10,14 @@ public class SalaData {
 	private String campus;
 	private String instituicao;
 	private Integer beacon;
+	private List<ReservaData> reservas;
 
 	public SalaData() {
 		
 	}
 	
 	public SalaData(Integer id, String nome, String bloco, String campus, 
-				String instituicao, Integer beacon) {
+				String instituicao, Integer beacon, List<ReservaData> reservas) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -22,6 +25,7 @@ public class SalaData {
 		this.campus = campus;
 		this.instituicao = instituicao;
 		this.beacon = beacon;
+		this.reservas = reservas;
 	}
 
 	public Integer getId() {
@@ -71,5 +75,13 @@ public class SalaData {
 	public void setBeacon(Integer beacon) {
 		this.beacon = beacon;
 	}
-		
+
+	public List<ReservaData> getReservas() {
+		return reservas;
+	}
+
+	public void setReservas(List<ReservaData> reservas) {
+		this.reservas = reservas;
+	}
+			
 }
