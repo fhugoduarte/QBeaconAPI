@@ -8,6 +8,10 @@ public class Constants {
 	public static final String TOKEN_PREFIX = "QBeacon";
 	public static final String CHAVE_SECRETA = "secretkeyqbeacon";
 	
+	public static final String URI_MQTT = "tcp://localhost:1883";
+	public static final String TOPICO_MQTT_API = "qbeacon";
+	public static final String TOPICO_MQTT_ARDUINO = "inTopic";
+	
 	/**
 	 *  Contants de retornos da API
 	 */

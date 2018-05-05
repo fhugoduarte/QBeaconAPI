@@ -5,16 +5,18 @@ public class BeaconData {
 	private Integer id;
 	private String nome;
 	private Integer sala;
+	private boolean ativado;
 	
 	public BeaconData() {
 		
 	}
 	
-	public BeaconData(Integer id, String nome, Integer sala) {
+	public BeaconData(Integer id, String nome, Integer sala, boolean ativado) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.sala = sala;
+		this.ativado = ativado;
 	}
 
 	public Integer getId() {
@@ -39,6 +41,14 @@ public class BeaconData {
 
 	public void setSala(Integer sala) {
 		this.sala = sala;
+	}
+
+	public boolean isAtivado() {
+		return ativado;
+	}
+
+	public void setAtivado(boolean ativado) {
+		this.ativado = ativado;
 	}
 	
 }
