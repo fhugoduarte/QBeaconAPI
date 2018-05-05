@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,16 +27,24 @@ public class BeaconResource {
 		if(beaconBanco.getSala() != null) {
 			BeaconData beacon = new BeaconData(beaconBanco.getId(), 
 					beaconBanco.getNome(), 
-					beaconBanco.getSala().getId());
+					beaconBanco.getSala().getId(),
+					beaconBanco.isAtivado());
 			
 			return new ResponseEntity<BeaconData>(beacon, HttpStatus.OK);
 		}else {
 			BeaconData beacon = new BeaconData(beaconBanco.getId(), 
 					beaconBanco.getNome(), 
-					null);
+					null,
+					beaconBanco.isAtivado());
 			
 			return new ResponseEntity<BeaconData>(beacon, HttpStatus.OK);
 		}
+	}
+	
+	@PostMapping(path="/ativar/{id}")
+	public void ativarBeacon(@PathVariable("id") Integer id){
+		Beacon beacon = beaconService.buscarBeacon(id);
+		System.err.println("ATIVOU : " + beacon.getNome() );
 	}
 	
 }
