@@ -18,6 +18,9 @@ public class Constants {
 	public static final String ERRO_EMAIL_SENHA = "Senha e/ou Email incorretos!";
 	public static final String SUCESSO_LOGIN_USUARIO = "Usuário logado com sucesso!";
 	
+	public static final String SUCESSO_PRESENCA_USUARIO = "Presença realizada com sucesso!";
+	public static final String ERRO_PRESENCA_USUARIO = "Não foi possível realizar a presença desse aluno!";
+	
 	public static final String SUCESSO_CADASTRO_USUARIO = "Usuário cadastrado com Sucesso!";
 	public static final String SUCESSO_ATUALIZAR_USUARIO = "Usuário atualizado com Sucesso!";
 	public static final String SUCESSO_EXCLUIR_USUARIO = "Usuário excluído com Sucesso!";

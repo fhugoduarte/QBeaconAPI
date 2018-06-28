@@ -30,4 +30,8 @@ public class ReservaService {
 		reservaRepo.delete(reserva);
 	}
 	
+	public Reserva buscaReserva(Integer id_sala, String horario, String diaSemana) {
+		return reservaRepo.buscaReserva(id_sala, horario, diaSemana);
+	}
+	
 }

@@ -30,4 +30,8 @@ public class AulaService {
 		aulaRepo.delete(aula);
 	}
 	
+	public Aula buscarAula (Integer id_turma, String dia) {
+		return aulaRepo.buscarAula(id_turma, dia);
+	}
+	
 }
